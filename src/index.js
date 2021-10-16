@@ -1,7 +1,15 @@
 import express from 'express';
+
+// middlewares
 import cors from 'cors';
 import dotenv from 'dotenv';
+import validateAtuthentication from './middlewares/authentication.middleware.js';
+import validateAccess from './middlewares/access.middleware.js';
+
+// utilities
 import connect from './database.js';
+
+// routes
 import Routes from './routes/index.js';
 
 // Initialization
@@ -10,11 +18,13 @@ const app = express();
 app.set('port', process.env.PORT);
 connect();
 
-// Midleware
+// Middlewares
 app.use(express.json());
 app.use(cors({
   "origin": [process.env.ORIGIN_LOCAL_DOMAIN]
 }));
+app.use(validateAtuthentication);
+app.use(validateAccess);
 
 // Routes
 app.get('/', (req, resp) => {
