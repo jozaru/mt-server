@@ -6,7 +6,7 @@ const validateAccess = (req, resp, next) => {
   if (url === '/' || url === '/api') {
     next();
   } else {
-    url = req.url.split('/api')[1].split('/').slice(0,3).join('/');
+    url = url.split('/api')[1].split('/').slice(0,3).join('/');
     const { role } = resp.locals.userData;
     const routesRoles = ROUTES_ROLES[url];
     const hasAccess = routesRoles && routesRoles.includes(role);
