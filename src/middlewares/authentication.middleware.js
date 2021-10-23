@@ -24,7 +24,7 @@ const googleAuthVerify = async (tokenId) => {
 
 const validateAtuthentication = (req, resp, next) => {
   const url = req.url;
-  if(url === '/' || url === '/api') {
+  if(url === '' || url === '/api') {
     next();
   } else {
     googleAuthVerify(req.headers.authorization)
