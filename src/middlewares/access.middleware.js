@@ -1,14 +1,15 @@
 // constants
-import ROUTES_ROLES from '../constants/routes-roles.contants.js'
+import { ROLES_ROUTES_MAPPING, ROUTES_REGEX } from '../constants/routes-roles.contants.js'
 
 const validateAccess = (req, resp, next) => {
   let url = req.url;
   if (url === '/' || url === '/api') {
     next();
   } else {
-    url = url.split('/api')[1].split('/').slice(0,3).join('/');
+    url = url.split('/api')[1];
     const { role } = resp.locals.userData;
-    const routesRoles = ROUTES_ROLES[url];
+    const route = ROUTES_REGEX.find(regex => regex.test(url)) ?? url;
+    const routesRoles = ROLES_ROUTES_MAPPING[route];
     const hasAccess = routesRoles && routesRoles.includes(role);
     if (hasAccess) {
       next();

@@ -10,12 +10,24 @@ const signInUser = async (userRequest) => {
   return user;
 };
 
+const findUsers = async () => {
+  const users = await Users.find();
+  return users;
+};
+
 const findUser = async (email) => {
   const user = await Users.findOne({ email });
+  return user;
+};
+
+const findUserById = async (id) => {
+  const user = await Users.findById(id);
   return user;
 };
 
 export {
   signInUser,
   findUser,
+  findUserById,
+  findUsers,
 }
