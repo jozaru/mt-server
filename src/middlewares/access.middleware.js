@@ -3,7 +3,7 @@ import ROUTES_ROLES from '../constants/routes-roles.contants.js'
 
 const validateAccess = (req, resp, next) => {
   let url = req.url;
-  if (url === '' || url === '/api') {
+  if (url === '/' || url === '/api') {
     next();
   } else {
     url = req.url.split('/api')[1].split('/').slice(0,3).join('/');
