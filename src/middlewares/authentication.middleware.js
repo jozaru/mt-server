@@ -23,14 +23,19 @@ const googleAuthVerify = async (tokenId) => {
 };
 
 const validateAtuthentication = (req, resp, next) => {
-  googleAuthVerify(req.headers.authorization)
-  .then(userData => {
-    resp.locals.userData = userData;
+  const url = req.url;
+  if(url === '/api') {
     next();
-  })
-  .catch(error => {
-    resp.status(401).json({ error: 'Usuario no autenticado' })
-  })
+  } else {
+    googleAuthVerify(req.headers.authorization)
+    .then(userData => {
+      resp.locals.userData = userData;
+      next();
+    })
+    .catch(error => {
+      resp.status(401).json({ error: 'Usuario no autenticado' })
+    })
+  }
 };
 
 export default validateAtuthentication;
